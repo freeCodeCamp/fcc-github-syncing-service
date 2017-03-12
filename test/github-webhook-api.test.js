@@ -7,10 +7,10 @@ describe('github-webhook-api', function() {
       expect(githubWebhookApi).to.throw(TypeError);
     });
     it('Throws TypeError if secret is not a string', function() {
-      expect(() => githubWebhookApi(Object.assign({ path: '', secret: 1, whitelistEvents: [] }))).to.throw(TypeError);
+      expect(() => githubWebhookApi(Object.assign({ secret: 1, whitelistEvents: [] }))).to.throw(TypeError);
     });
     it('Throws TypeError if whitelistEvents is not an array', function() {
-      expect(() => githubWebhookApi(Object.assign({ path: '', secret: '', whitelistEvents: 1 }))).to.throw(TypeError);
+      expect(() => githubWebhookApi(Object.assign({ secret: '', whitelistEvents: 1 }))).to.throw(TypeError);
     });
 
   });

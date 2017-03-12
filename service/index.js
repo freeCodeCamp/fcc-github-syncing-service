@@ -1,26 +1,44 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const express = require('express');
-const app = express();
 
 const githubWebhookApi = require('./lib/github-webhook-api');
 
 const {
   HOST,
   PORT,
-  SECRET
+  SECRET,
+  MONGO_URI
 } = process.env;
 
+// Connect to db
+mongoose.connect(MONGO_URI);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
+// Config express
+const app = express();
+app.use(bodyParser.json());
+
 const webhook = githubWebhookApi({
-  secret: process.env.SECRET
+  secret: SECRET
 });
 
 app.post('/webhook', webhook, (req, res) => {
+  console.log(req.body);
   console.log('Received request');
 });
 
-app.listen(PORT || 8080, HOST || 'localhost', () => {
+const port = PORT || 8080;
+const host = HOST || 'localhost';
+app.listen(port, host, () => {
   const displayMessage = `
   ############################
   #   Microservice started   #
+  ############################
+  # Host: ${host}
+  # Port: ${port}
   ############################
   `;
   console.log(displayMessage);

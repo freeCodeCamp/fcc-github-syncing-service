@@ -19,11 +19,11 @@ function config (config) {
 
   // Mandatory
   if (typeof secret !== 'string') {
-    throw new TypeError('secret must be a string in github webhook.');
+    throw new TypeError('secret must be a string.');
   }
   // Optional
   if (whitelistEvents && !Array.isArray(whitelistEvents)) {
-    throw new TypeError('whitelistEvents must be an array in github webhook.');
+    throw new TypeError('whitelistEvents must be an array.');
   }
 
   /**
@@ -80,12 +80,18 @@ function config (config) {
    */
 
   function middleware(req, res, next) {
+
+    // If req.body is undefined, return status code 500. The user probably hasn't parsed req.body.
+    if (req.body === undefined) {
+      return res.sendStatus(500);
+    }
+
     const event = req.headers['x-github-event']; // Name of the event that triggered this delivery.
     const signature = req.headers['x-hub-signature']; // HMAC hex digest of the payload, using the hook's secret as the key (if configured).
     const deliveryId = req.headers['x-github-delivery']; // Unique ID for this delivery.
 
     // Return status 200 if the event is not in the whitelist
-    if (whitelistEvents.length && ~whitelistEvents.indexOf(event)) {
+    if (whitelistEvents && whitelistEvents.length && ~whitelistEvents.indexOf(event)) {
       return res.sendStatus(200);
     }
 
@@ -101,10 +107,11 @@ function config (config) {
     } catch (e) {
       return res.sendStatus(400);
     }
-    const createHmac = crypto.createHmac('sha1', secret);
-    const computedSignature = createHmac.update(data).digest('hex');
-    const signaturesDoNotMatch = computedSignature !== deliveryId;
 
+    const createHmac = crypto.createHmac('sha1', secret);
+    const computedSignature = `sha1=${createHmac.update(data).digest('hex')}`;
+    const signaturesDoNotMatch = computedSignature !== signature;
+    
     if (signaturesDoNotMatch) {
       return res.sendStatus(401);
     }
