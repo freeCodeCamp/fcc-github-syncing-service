@@ -1,0 +1,33 @@
+{
+  "name": "fcc-github-syncing-service",
+  "version": "0.1.0",
+  "description": "A prototype for a service freeCodeCamp can use to sync camper progress between GitHub and freeCodeCamp.com",
+  "main": "service/index.js",
+  "scripts": {
+    "start": "node service/index.js",
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeCodeCamp/fcc-github-syncing-service.git"
+  },
+  "keywords": [
+    "fcc",
+    "freecodecamp",
+    "github",
+    "webhooks"
+  ],
+  "author": "AndrewGHC <andrew.ghc101@gmail.com> (https://github.com/AndrewGHC)",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/freeCodeCamp/fcc-github-syncing-service/issues"
+  },
+  "homepage": "https://github.com/freeCodeCamp/fcc-github-syncing-service#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
