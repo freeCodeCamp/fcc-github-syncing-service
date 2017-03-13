@@ -3,13 +3,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const express = require('express');
 
-const githubWebhookApi = require('./lib/github-webhook-api');
+const routes = require('./routes');
 
 const {
   HOST,
   PORT,
-  SECRET,
-  MONGO_URI
+  MONGO_URI,
 } = process.env;
 
 // Connect to db
@@ -20,15 +19,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 // Config express
 const app = express();
 app.use(bodyParser.json());
-
-const webhook = githubWebhookApi({
-  secret: SECRET
-});
-
-app.post('/webhook', webhook, (req, res) => {
-  console.log(req.body);
-  console.log('Received request');
-});
+routes(app);
 
 const port = PORT || 8080;
 const host = HOST || 'localhost';

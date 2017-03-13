@@ -1,11 +1,12 @@
 /**
 * Constants for the point value of github events
-* E.g. - a pull request is worth 2 points
+* E.g. - a pull request is worth 1 points
 */
 
-// See event list https://developer.github.com/webhooks/
+// See event list https://developer.github.com/webhooks/ & https://developer.github.com/v3/activity/events/types
 const scoreValues = {
-  PULL_REQUEST: 1, // https://developer.github.com/v3/activity/events/types/#pullrequestevent
+  ISSUES:         1,
+  PULL_REQUEST:   1,
 };
 
 module.exports = scoreValues;
