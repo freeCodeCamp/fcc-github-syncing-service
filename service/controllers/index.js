@@ -1,7 +1,7 @@
-const ping = require('./events/ping');
-const pullRequest = require('./events/pull_request');
+const events = require('./events');
+const api = require('./api');
 
 module.exports = {
-  ping,
-  pullRequest,
+  events,
+  api,
 };

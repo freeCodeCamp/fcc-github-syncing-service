@@ -5,8 +5,7 @@
 
 // See event list https://developer.github.com/webhooks/ & https://developer.github.com/v3/activity/events/types
 const scoreValues = {
-  ISSUES:         1,
-  PULL_REQUEST:   1,
+  PULL_REQUEST_MERGED_POINTS:   1,
 };
 
 const MAX_SCORE = 200;
