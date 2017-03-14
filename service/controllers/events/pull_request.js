@@ -1,10 +1,10 @@
 const User = require('../../models/user');
 const PullRequest = require('../../models/pullRequests');
-const scoreConstants = require('../../constants/score_values');
+const { scoreValues, MAX_SCORE } = require('../../constants');
 
 const {
   PULL_REQUEST
-} = scoreConstants;
+} = scoreValues;
 
 module.exports = (req, res) => {
   const points = PULL_REQUEST;
@@ -29,11 +29,22 @@ module.exports = (req, res) => {
     };
 
     User.findOneOrCreate({ username }, (err, doc) => {
-      if (doc.score !== 100) {
-        User.update({ username }, { $inc: { score: 1 } });
+      // User has not achieved the MAX_SCORE
+      const userHasNotFinished = doc.score !== MAX_SCORE && !doc.hasFinished;
+      if (userHasNotFinished) {
+        // User.score += 1
+        User.update({ username }, { $inc: { score: 1 } }, { runValidators: true }, () => {
+          // If the current doc score has been updated to the MAX_SCORE
+          const docIsNowAtTheMaxScore = doc.score === MAX_SCORE - 1;
+          if (docIsNowAtTheMaxScore) {
+            // User.hasFinished = true
+            User.update({ username }, { $set: { hasFinished: true } }, { runValidators: true }, () => {});
+          }
+        });
         PullRequest.create(createPullRequest);
-        res.sendStatus(200);
       }
     });
   }
+
+  res.sendStatus(200);
 };

@@ -9,4 +9,9 @@ const scoreValues = {
   PULL_REQUEST:   1,
 };
 
-module.exports = scoreValues;
+const MAX_SCORE = 200;
+
+module.exports = {
+  scoreValues,
+  MAX_SCORE
+};
