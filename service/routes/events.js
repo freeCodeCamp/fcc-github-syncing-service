@@ -1,7 +1,7 @@
-const githubWebhookApi = require('../lib/github-webhook-api');
+const expressWebhookMiddleware = require('express-middleware-github-webhooks');
 const { events } = require('../controllers');
 
-const webhook = githubWebhookApi({
+const webhook = expressWebhookMiddleware({
   secret: process.env.SECRET
 });
 

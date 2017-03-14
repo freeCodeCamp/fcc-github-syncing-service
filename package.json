@@ -4,8 +4,7 @@
   "description": "A prototype for a service freeCodeCamp can use to sync camper progress between GitHub and freeCodeCamp.com",
   "main": "service/index.js",
   "scripts": {
-    "start": "node service/index.js",
-    "test": "./node_modules/mocha/bin/mocha"
+    "start": "node service/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,10 +26,8 @@
     "body-parser": "^1.17.1",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "express-middleware-github-webhooks": "^1.0.0",
     "mongoose": "^4.8.7"
   },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0"
-  }
+  "devDependencies": {}
 }
