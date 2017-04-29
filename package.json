@@ -23,11 +23,7 @@
   },
   "homepage": "https://github.com/freeCodeCamp/fcc-github-syncing-service#readme",
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "dotenv": "^4.0.0",
-    "express": "^4.15.2",
-    "express-middleware-github-webhooks": "^1.0.0",
-    "mongoose": "^4.8.7"
+    "dotenv": "^4.0.0"
   },
   "devDependencies": {}
 }
